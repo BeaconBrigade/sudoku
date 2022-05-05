@@ -61,10 +61,11 @@ int parser(char *name, int* puzzle)
 		else if (isspace(*c) || *c == ',')
 			continue;
 		else
-			*puzzle = -1;
+			*puzzle++ = -1;
 		i++;
 	}
 
+	fclose(src);
 	return 0;
 }
 
