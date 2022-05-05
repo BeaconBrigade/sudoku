@@ -1,36 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 int parser(char *name, int puzzle[81]);
 void solver(int puzzle[81]);
-
-void printpuzzle(int puzzle[81])
-{
-	for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-			printf("%d", puzzle[i * 9 + j]);
-		putchar('\n');
-	}
-	putchar('\n');
-}
+void printpuzzle(char *loc, int puzzle[81]);
 
 /* Handle command line arguments and call parser and solver */
 int main(int argc, char *argv[])
 {
-	if (argc != 2)
+	char *outfile = NULL;
+	int i = 2;
+
+	/* -o option is set */
+	if (argc == 4)
+	{
+		for (i = 1; i < 3; i++)
+			if (!strcmp(argv[i], "-o"))
+			{
+				outfile = argv[i + 1];
+				break;
+			}
+	}
+	else if (argc != 2)
 	{
 		fprintf(stderr, "Using %s FILENAME\n", argv[0]);
 		return 1;
 	}
-	
+
+	/* Parse input */
 	int puzzle[81];
 
-	if (parser(argv[1], puzzle) == -1)
+	if (parser(argv[((i == 2) ? 1 : 3)], puzzle) == -1)
 		return 1;
 
-	printpuzzle(puzzle);
+	printpuzzle(outfile, puzzle);
 }
 
 /* Read file into puzzle array */
@@ -40,7 +45,7 @@ int parser(char *name, int* puzzle)
 	int i;
 	char c[2];
 	c[1] = '\0';
-	
+
 	if ((src = fopen(name, "r")) == NULL)
 	{
 		fprintf(stderr, "Sudoku: Error loading file.\n");
@@ -75,3 +80,30 @@ void solver(int puzzle[81])
 
 }
 
+/* Print output to stdout or specified output file */
+void printpuzzle(char *loc, int puzzle[81])
+{
+	FILE *out;
+
+	if (loc == NULL)
+		out = stdout;
+	else 
+	{
+		if ((out = fopen(loc, "w")) == NULL)
+		{
+			fprintf(stderr, "Sudoku: error opening output file");
+			exit(1);
+		}
+	}
+
+	for (int i = 0; i < 9; i++)
+	{
+		for (int j = 0; j < 9; j++)
+			fprintf(out, "%d ", puzzle[i * 9 + j]);
+		fputc('\n', out);
+	}
+	fputc('\n', out);
+
+	if (out != stdout)
+		fclose(out);
+}
