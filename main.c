@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	}
 	else if (argc != 2)
 	{
-		fprintf(stderr, "Using %s FILENAME\n", argv[0]);
+		fprintf(stderr, "Sudoku: using %s FILENAME\n", argv[0]);
 		return 1;
 	}
 
@@ -102,7 +102,6 @@ void printpuzzle(char *loc, int puzzle[81])
 			fprintf(out, "%d ", puzzle[i * 9 + j]);
 		fputc('\n', out);
 	}
-	fputc('\n', out);
 
 	if (out != stdout)
 		fclose(out);
