@@ -10,3 +10,5 @@ main: $(OBJ)
 $(OBJ): $(SRC)
 	gcc $(CFLAGS) $(SRC)
 
+clean :
+	rm -f main *.o
