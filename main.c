@@ -45,8 +45,8 @@ int parser(char *name, int* puzzle)
 {
 	FILE *src;
 	int i;
-	char c[2];
-	c[1] = '\0';
+
+	char c;
 
 	if ((src = fopen(name, "r")) == NULL)
 	{
@@ -57,15 +57,15 @@ int parser(char *name, int* puzzle)
 	/* Read array */
 	for (i = 0; i < 81; )
 	{
-		if ((*c = fgetc(src)) == EOF)
+		if ((c = fgetc(src)) == EOF)
 		{
 			fprintf(stderr, "Sudoku: Not enough input.\n");
 			return -1;
 		}
 		
-		if (isdigit(*c))
-			*puzzle++ = atoi(c);
-		else if (isspace(*c) || *c == ',')
+		if (isdigit(c))
+			*puzzle++ = c - '0';
+		else if (isspace(c) || c == ',')
 			continue;
 		else
 			*puzzle++ = 10;
