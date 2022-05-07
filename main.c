@@ -165,6 +165,7 @@ void solver(int puzzle[81])
 
 	int curpos = 0;
 	
+	
 }
 
 /* Print output to stdout or specified output file */
