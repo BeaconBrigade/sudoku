@@ -9,7 +9,7 @@ typedef struct
 {
 	int *children[9];
 	int candidate[81];
-} node;
+} Node;
 
 /* Solve puzzle using backtracking */
 void solver(int root[81])

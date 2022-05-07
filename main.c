@@ -4,8 +4,8 @@
 #include <string.h>
 #include "backtrack.h"
 
-void printpuzzle(char *loc, int puzzle[81]);
 int parser(char *name, int puzzle[81]);
+void printpuzzle(char *loc, int puzzle[81]);
 
 /* Handle command line arguments and call parser and solver */
 int main(int argc, char *argv[])

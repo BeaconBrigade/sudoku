@@ -1,0 +1,5 @@
+
+# Ignore all of the executable and object files
+*.o
+main
+
