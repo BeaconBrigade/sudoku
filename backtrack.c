@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "backtrack.h"
 
 static int reject(const int puzzle[81]);
@@ -111,5 +112,6 @@ static int isfull(const int puzzle[81])
 	for (int i = 0; i < 81; i++)
 		if (puzzle[i] == 10)
 			return 0;
+    return 1;
 }
 
