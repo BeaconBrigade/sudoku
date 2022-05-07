@@ -1,6 +1,12 @@
 #ifndef BACKTRACK
 #define BACKTRACK
+typedef struct NODE
+{
+    int childindex;
+	struct NODE *children[10];
+	int *candidate;
+} Node;
 
-void solver(int *);
+Node *backtrack(Node *root);
 
 #endif

@@ -31,13 +31,21 @@ int main(int argc, char *argv[])
 
 	/* Parse input */
 	int puzzle[81];
-
 	if (parser(argv[((i == 2) ? 1 : 3)], puzzle) == -1)
 		return 1;
 
-	solver(puzzle);
-	
-	printpuzzle(outfile, puzzle);
+	/* Solve puzzle */
+	Node x;
+	Node *root, *sol;
+	root = &x;
+	root->candidate = puzzle;
+	if ((sol = backtrack(root)) == NULL)
+	{
+		fprintf(stderr, "Sudoku: Unable to solve puzzle.\n");
+		return 1;
+	}
+
+	printpuzzle(outfile, sol->candidate);
 }
 
 /* Read file into puzzle array */

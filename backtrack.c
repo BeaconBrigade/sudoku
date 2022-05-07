@@ -2,37 +2,96 @@
 #include <stdlib.h>
 #include "backtrack.h"
 
-static int reject(const int puzzle[81]);
-static int isfull(const int puzzle[81]);
-
-typedef struct
-{
-	int *children[9];
-	int candidate[81];
-} Node;
+static int reject(const Node *cand);
+static int accept(const Node *cand);
+static Node *first(Node *parent);
+static Node *next(Node *parent, int tochange, const Node *prev);
 
 /* Solve puzzle using backtracking */
-void solver(int root[81])
+Node *backtrack(Node *candidate)
 {
-	if (reject(root))
+	int tochange;
+	/* Base cases */
+	if (reject(candidate))
 	{
-		fprintf(stderr, "Sudoku: input is not valid puzzle.\n");
-		exit(1);
+		free(candidate);
+		return NULL;
 	}
-	/* Valid solution already exits if it's full and not wrong */
-	else if (isfull(root))
-		return;
+	else if (accept(candidate))
+		return candidate;
+	/* Recursively create tree */
+	Node *s = first(candidate);
+	Node *p;
+	for (tochange = 0; s != NULL; tochange++)
+	{
+		if ((p = backtrack(s)) != NULL)
+			return p;
+		p = s;
+		s = next(candidate, tochange, p);
+	}
 
-	
-	
-	
+	free(candidate);
+	return NULL;
+}
+
+static Node *first(Node *parent)
+{
+	int i, newspace = 1;
+	int puz[81];
+	Node *child = (Node *) malloc(sizeof(Node));
+	child->candidate = puz;
+
+	/* Copy parent into child, and set first unset element to 0 */
+	for (i = 0; i < 81; i++)
+	{
+		child->candidate[i] = parent->candidate[i];
+		if ((parent->candidate[i] == 10) && newspace)
+		{
+			child->candidate[i] = 0;
+			newspace = 0;
+		}
+	}
+
+	parent->children[0] = child;
+	return child;
+}
+
+/* Generate next possibility */
+static Node *next(Node *parent, int tochange, const Node *prev)
+{
+	/* If we've enumerated all children of this type */
+	if (prev->candidate[tochange] == 9)
+		return NULL;
+
+	int puz[81];
+	Node *child = (Node *) malloc(sizeof(Node));
+	child->candidate = puz;
+	int i;
+
+	for (i = 0; i < 81; i++)
+		child->candidate[i] = prev->candidate[i];
+
+	child->candidate[tochange]++;
+	parent->children[parent->childindex++] = child;
+
+	return child;
+}
+
+/* Check if board is full */
+static int accept(const Node *cand)
+{
+	for (int i = 0; i < 81; i++)
+		if (cand->candidate[i] == 10)
+			return 0;
+	return 1;
 }
 
 /* Reject bad solutions */
-static int reject(const int puzzle[81])
+static int reject(const Node *cand)
 {
 	int counter[11] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	int i, j, k, offset;
+	int *puzzle = cand->candidate;
 
 	/* Check each horizontal row */
 	for (i = 0; i < 9; i++)
@@ -104,14 +163,5 @@ static int reject(const int puzzle[81])
 	}
 	
 	return 0;
-}
-
-/* Check if board is full */
-static int isfull(const int puzzle[81])
-{
-	for (int i = 0; i < 81; i++)
-		if (puzzle[i] == 10)
-			return 0;
-    return 1;
 }
 
