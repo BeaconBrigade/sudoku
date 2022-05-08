@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Parse input */
-	int puzzle[81];
+	int *puzzle = (int *) calloc(81, sizeof(int));
 	if (parser(argv[((i == 2) ? 1 : 3)], puzzle) == -1)
 		return 1;
 
@@ -40,7 +40,9 @@ int main(int argc, char *argv[])
 	root = &x;
 	root->candidate = puzzle;
 	root->childindex = 0;
-	
+	for (i = 0; i < 10; i++)
+		root->children[i] = NULL;
+
 	if ((sol = backtrack(root)) == NULL)
 	{
 		fprintf(stderr, "Sudoku: Unable to solve puzzle.\n");
@@ -48,6 +50,7 @@ int main(int argc, char *argv[])
 	}
 
 	printpuzzle(outfile, sol->candidate);
+	releasenode(root);
 }
 
 /* Read file into puzzle array */

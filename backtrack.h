@@ -8,5 +8,6 @@ typedef struct NODE
 } Node;
 
 Node *backtrack(Node *root);
+void releasenode(Node *base);
 
 #endif

@@ -13,7 +13,10 @@ Node *backtrack(Node *candidate)
 	int tochange;
 	/* Base cases */
 	if (reject(candidate))
+	{
+		releasenode(candidate);
 		return NULL;
+	}
 	else if (accept(candidate))
 		return candidate;
 		
@@ -28,6 +31,7 @@ Node *backtrack(Node *candidate)
 		s = next(candidate, tochange, p);
 	}
 
+	releasenode(candidate);
 	return NULL;
 }
 
@@ -35,10 +39,12 @@ static Node *first(Node *parent)
 {
 	int i, newspace = 1;
 
-	int *puz = (int *) malloc(sizeof(int) * 81);
+	int *puz = (int *) calloc(81, sizeof(int));
 	Node *child = (Node *) malloc(sizeof(Node));
 	child->candidate = puz;
 	child->childindex = 0;
+	for (i = 0; i < 10; i++)
+		child->children[i] = NULL;
 
 	/* Copy parent into child, and set first unset element to 0 */
 	for (i = 0; i < 81; i++)
@@ -60,15 +66,18 @@ static Node *first(Node *parent)
 static Node *next(Node *parent, const int tochange, const Node *prev)
 {
 	/* If we've enumerated all children of this type */
-	if (prev->childindex == 9)
+	if (parent->childindex == 9)
 		return NULL;
 
-	int *puz = (int *) malloc(sizeof(int) * 81);
+	int i;
+
+	int *puz = (int *) calloc(81, sizeof(int));
 	Node *child = (Node *) malloc(sizeof(Node));
 	child->candidate = puz;
 	child->childindex = 0;
+	for (i = 0; i < 10; i++)
+		child->children[i] = NULL;
 
-	int i;
 
 	for (i = 0; i < 81; i++)
 		child->candidate[i] = prev->candidate[i];
@@ -77,6 +86,25 @@ static Node *next(Node *parent, const int tochange, const Node *prev)
 	parent->children[parent->childindex++] = child;
 
 	return child;
+}
+
+/* Release memory from trees that are invalid */
+void releasenode(Node *base)
+{
+	int i;
+
+	for (i = 0; i < 10; i++)
+	{
+		if (base->children[i] == NULL)
+			break;
+		else
+			releasenode(base->children[i]);
+		free(base->children[i]->candidate);
+		free(base->children[i]);
+	}
+
+	free(base->candidate);
+	free(base);
 }
 
 /* Check if board is full */
