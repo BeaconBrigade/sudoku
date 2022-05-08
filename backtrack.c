@@ -19,6 +19,7 @@ Node *backtrack(Node *candidate)
 	}
 	else if (accept(candidate))
 		return candidate;
+		
 	/* Recursively create tree */
 	Node *s = first(candidate);
 	Node *p;
@@ -91,21 +92,20 @@ static int reject(const Node *cand)
 {
 	int counter[11] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	int i, j, k, offset;
-	int *puzzle = cand->candidate;
 
 	/* Check each horizontal row */
 	for (i = 0; i < 9; i++)
 	{
 		/* I was trying to avoid nested for loops :p */
-		counter[puzzle[i * 9]]++;
-		counter[puzzle[i * 9 + 1]]++;
-		counter[puzzle[i * 9 + 2]]++;
-		counter[puzzle[i * 9 + 3]]++;
-		counter[puzzle[i * 9 + 4]]++;
-		counter[puzzle[i * 9 + 5]]++;
-		counter[puzzle[i * 9 + 6]]++;
-		counter[puzzle[i * 9 + 7]]++;
-		counter[puzzle[i * 9 + 8]]++;
+		counter[cand->candidate[i * 9]]++;
+		counter[cand->candidate[i * 9 + 1]]++;
+		counter[cand->candidate[i * 9 + 2]]++;
+		counter[cand->candidate[i * 9 + 3]]++;
+		counter[cand->candidate[i * 9 + 4]]++;
+		counter[cand->candidate[i * 9 + 5]]++;
+		counter[cand->candidate[i * 9 + 6]]++;
+		counter[cand->candidate[i * 9 + 7]]++;
+		counter[cand->candidate[i * 9 + 8]]++;
 
 		for (j = 0; j < 10; j++)
 		{
@@ -118,15 +118,15 @@ static int reject(const Node *cand)
 	/* Check each vertical row */
 	for (i = 0; i < 9; i++)
 	{
-		counter[puzzle[i]]++;
-		counter[puzzle[9 + i]]++;
-		counter[puzzle[18 + i]]++;
-		counter[puzzle[27 + i]]++;
-		counter[puzzle[36 + i]]++;
-		counter[puzzle[45 + i]]++;
-		counter[puzzle[54 + i]]++;
-		counter[puzzle[63 + i]]++;
-		counter[puzzle[72 + i]]++;
+		counter[cand->candidate[i]]++;
+		counter[cand->candidate[9 + i]]++;
+		counter[cand->candidate[18 + i]]++;
+		counter[cand->candidate[27 + i]]++;
+		counter[cand->candidate[36 + i]]++;
+		counter[cand->candidate[45 + i]]++;
+		counter[cand->candidate[54 + i]]++;
+		counter[cand->candidate[63 + i]]++;
+		counter[cand->candidate[72 + i]]++;
 
 		for (j = 0; j < 10; j++)
 		{
@@ -147,9 +147,9 @@ static int reject(const Node *cand)
 			/* Traverse row in each square */
 			for (k = 0; k < 3; k++)
 			{
-				counter[puzzle[offset]]++;
-				counter[puzzle[offset + 1]]++;
-				counter[puzzle[offset + 2]]++;
+				counter[cand->candidate[offset]]++;
+				counter[cand->candidate[offset + 1]]++;
+				counter[cand->candidate[offset + 2]]++;
 				offset += 9;
 			}
 

@@ -1,5 +1,12 @@
 {
     "files.associations": {
         "backtrack.h": "c"
-    }
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/Users/rcullen/Dev/C/sudoku",
+            "binaryPath": "/Users/rcullen/Dev/C/sudoku/main",
+            "binaryArgs": []
+        }
+    ]
 }

@@ -1,0 +1,5 @@
+make all --dry-run --keep-going --print-directory
+make: Entering directory `/Users/rcullen/Dev/C/sudoku'
+make: Nothing to be done for `all'.
+make: Leaving directory `/Users/rcullen/Dev/C/sudoku'
+ 

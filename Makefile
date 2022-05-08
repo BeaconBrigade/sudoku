@@ -3,12 +3,13 @@ all: main
 CFLAGS = -g -Wall -c
 SRC = *.c
 OBJ = *.o
+CC = clang
 
 main: $(OBJ)
-	gcc $(OBJ) -o $@
+	$(CC) $(OBJ) -o $@
 
 $(OBJ): $(SRC)
-	gcc $(CFLAGS) $(SRC)
+	$(CC) $(CFLAGS) $(SRC)
 
 clean :
 	rm -f main $(OBJ)
