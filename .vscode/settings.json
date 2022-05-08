@@ -6,7 +6,7 @@
         {
             "cwd": "/Users/rcullen/Dev/C/sudoku",
             "binaryPath": "/Users/rcullen/Dev/C/sudoku/main",
-            "binaryArgs": ["puzzles/sudoku2.txt"],
+            "binaryArgs": ["puzzles/sudoku3.txt"],
             "stopAtEntry": true
         }
     ],

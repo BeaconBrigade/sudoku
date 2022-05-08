@@ -5,7 +5,7 @@
 static int reject(const Node *cand);
 static int accept(const Node *cand);
 static Node *first(Node *parent);
-static Node *next(Node *parent, int tochange, const Node *prev);
+static Node *next(Node *parent, const int tochange, const Node *prev);
 
 /* Solve puzzle using backtracking */
 Node *backtrack(Node *candidate)
@@ -57,10 +57,10 @@ static Node *first(Node *parent)
 }
 
 /* Generate next possibility */
-static Node *next(Node *parent, int tochange, const Node *prev)
+static Node *next(Node *parent, const int tochange, const Node *prev)
 {
 	/* If we've enumerated all children of this type */
-	if (prev->candidate[tochange] == 9)
+	if (prev->childindex == 9)
 		return NULL;
 
 	int *puz = (int *) malloc(sizeof(int) * 81);
