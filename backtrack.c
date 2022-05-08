@@ -4,13 +4,13 @@
 
 static int reject(const Node *cand);
 static int accept(const Node *cand);
-static Node *first(Node *parent);
+static Node *first(Node *parent, int *tochange);
 static Node *next(Node *parent, const int tochange, const Node *prev);
 
 /* Solve puzzle using backtracking */
 Node *backtrack(Node *candidate)
 {
-	int tochange;
+	int tochange = 0;
 	/* Base cases */
 	if (reject(candidate))
 	{
@@ -21,9 +21,9 @@ Node *backtrack(Node *candidate)
 		return candidate;
 		
 	/* Recursively create tree */
-	Node *s = first(candidate);
+	Node *s = first(candidate, &tochange);
 	Node *p;
-	for (tochange = 0; s != NULL; tochange++)
+	while (s != NULL)
 	{
 		if ((p = backtrack(s)) != NULL)
 			return p;
@@ -35,7 +35,8 @@ Node *backtrack(Node *candidate)
 	return NULL;
 }
 
-static Node *first(Node *parent)
+/* Generate first extension of parent */
+static Node *first(Node *parent, int *tochange)
 {
 	int i, newspace = 1;
 
@@ -53,6 +54,7 @@ static Node *first(Node *parent)
 		if ((parent->candidate[i] == 10) && newspace)
 		{
 			child->candidate[i] = 0;
+			*tochange = i;
 			newspace = 0;
 		}
 	}
@@ -99,8 +101,6 @@ void releasenode(Node *base)
 			break;
 		else
 			releasenode(base->children[i]);
-		free(base->children[i]->candidate);
-		free(base->children[i]);
 	}
 
 	free(base->candidate);
@@ -178,4 +178,3 @@ static int reject(const Node *cand)
 	
 	return 0;
 }
-
