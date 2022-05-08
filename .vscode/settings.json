@@ -6,7 +6,9 @@
         {
             "cwd": "/Users/rcullen/Dev/C/sudoku",
             "binaryPath": "/Users/rcullen/Dev/C/sudoku/main",
-            "binaryArgs": []
+            "binaryArgs": ["puzzles/sudoku2.txt"],
+            "stopAtEntry": true
         }
-    ]
+    ],
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }
