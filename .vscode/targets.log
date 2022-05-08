@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Sat May  7 23:05:00 2022
+# Make data base, printed on Sat May  7 23:20:27 2022
 
 # Variables
 
@@ -46,7 +46,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/cg/cv2gz9n937s4_7p1h5yq8y5m0000gq/T/vscode-ipc-847a1b9b-bdbc-4556-81d1-5cb18937d17b.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/cg/cv2gz9n937s4_7p1h5yq8y5m0000gq/T/vscode-ipc-6114a441-5c55-4bd4-a01f-82f58ade21e5.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -191,7 +191,7 @@ all: main
 
 backtrack.o: backtrack.c main.c
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-07 22:57:47
+#  Last modified 2022-05-07 23:16:04
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -203,7 +203,7 @@ backtrack.o: backtrack.c main.c
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-07 19:50:18
+#  Last modified 2022-05-07 23:15:18
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -227,7 +227,7 @@ Makefile:
 # Not a target:
 backtrack.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-07 22:56:20
+#  Last modified 2022-05-07 23:14:55
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -249,7 +249,7 @@ clean:
 
 main: backtrack.o main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-07 22:57:47
+#  Last modified 2022-05-07 23:16:04
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -260,7 +260,7 @@ main: backtrack.o main.o
 
 main.o: backtrack.c main.c
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-07 22:57:47
+#  Last modified 2022-05-07 23:16:04
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `Makefile', line 12):
@@ -280,6 +280,6 @@ main.o: backtrack.c main.c
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat May  7 23:05:00 2022
+# Finished Make data base on Sat May  7 23:20:27 2022
 
  

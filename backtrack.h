@@ -2,7 +2,7 @@
 #define BACKTRACK
 typedef struct NODE
 {
-    int childindex;
+	int childindex;
 	struct NODE *children[10];
 	int *candidate;
 } Node;

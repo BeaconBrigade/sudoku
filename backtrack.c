@@ -34,6 +34,7 @@ Node *backtrack(Node *candidate)
 static Node *first(Node *parent)
 {
 	int i, newspace = 1;
+
 	int *puz = (int *) malloc(sizeof(int) * 81);
 	Node *child = (Node *) malloc(sizeof(Node));
 	child->candidate = puz;
@@ -51,6 +52,7 @@ static Node *first(Node *parent)
 	}
 
 	parent->children[0] = child;
+	parent->childindex++;
 	return child;
 }
 
@@ -64,6 +66,8 @@ static Node *next(Node *parent, int tochange, const Node *prev)
 	int *puz = (int *) malloc(sizeof(int) * 81);
 	Node *child = (Node *) malloc(sizeof(Node));
 	child->candidate = puz;
+	child->childindex = 0;
+
 	int i;
 
 	for (i = 0; i < 81; i++)
@@ -71,7 +75,6 @@ static Node *next(Node *parent, int tochange, const Node *prev)
 
 	child->candidate[tochange]++;
 	parent->children[parent->childindex++] = child;
-	child->childindex = 0;
 
 	return child;
 }
