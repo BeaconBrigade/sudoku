@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 	Node *root, *sol;
 	root = &x;
 	root->candidate = puzzle;
+	root->childindex = 0;
 	if ((sol = backtrack(root)) == NULL)
 	{
 		fprintf(stderr, "Sudoku: Unable to solve puzzle.\n");

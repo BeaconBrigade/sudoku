@@ -13,10 +13,7 @@ Node *backtrack(Node *candidate)
 	int tochange;
 	/* Base cases */
 	if (reject(candidate))
-	{
-		free(candidate);
 		return NULL;
-	}
 	else if (accept(candidate))
 		return candidate;
 		
@@ -31,7 +28,6 @@ Node *backtrack(Node *candidate)
 		s = next(candidate, tochange, p);
 	}
 
-	free(candidate);
 	return NULL;
 }
 
@@ -41,6 +37,7 @@ static Node *first(Node *parent)
 	int *puz = (int *) malloc(sizeof(int) * 81);
 	Node *child = (Node *) malloc(sizeof(Node));
 	child->candidate = puz;
+	child->childindex = 0;
 
 	/* Copy parent into child, and set first unset element to 0 */
 	for (i = 0; i < 81; i++)
@@ -74,6 +71,7 @@ static Node *next(Node *parent, int tochange, const Node *prev)
 
 	child->candidate[tochange]++;
 	parent->children[parent->childindex++] = child;
+	child->childindex = 0;
 
 	return child;
 }
@@ -96,16 +94,8 @@ static int reject(const Node *cand)
 	/* Check each horizontal row */
 	for (i = 0; i < 9; i++)
 	{
-		/* I was trying to avoid nested for loops :p */
-		counter[cand->candidate[i * 9]]++;
-		counter[cand->candidate[i * 9 + 1]]++;
-		counter[cand->candidate[i * 9 + 2]]++;
-		counter[cand->candidate[i * 9 + 3]]++;
-		counter[cand->candidate[i * 9 + 4]]++;
-		counter[cand->candidate[i * 9 + 5]]++;
-		counter[cand->candidate[i * 9 + 6]]++;
-		counter[cand->candidate[i * 9 + 7]]++;
-		counter[cand->candidate[i * 9 + 8]]++;
+		for (j = 0; j < 9; j++)
+			counter[cand->candidate[i * 9 + j]]++;
 
 		for (j = 0; j < 10; j++)
 		{
@@ -118,15 +108,8 @@ static int reject(const Node *cand)
 	/* Check each vertical row */
 	for (i = 0; i < 9; i++)
 	{
-		counter[cand->candidate[i]]++;
-		counter[cand->candidate[9 + i]]++;
-		counter[cand->candidate[18 + i]]++;
-		counter[cand->candidate[27 + i]]++;
-		counter[cand->candidate[36 + i]]++;
-		counter[cand->candidate[45 + i]]++;
-		counter[cand->candidate[54 + i]]++;
-		counter[cand->candidate[63 + i]]++;
-		counter[cand->candidate[72 + i]]++;
+		for (j = 0; j < 9; j++)
+			counter[cand->candidate[9 * j + i]]++;
 
 		for (j = 0; j < 10; j++)
 		{
