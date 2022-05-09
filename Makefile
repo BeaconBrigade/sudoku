@@ -3,7 +3,7 @@ all: main
 CFLAGS = -g -Wall -c
 SRC = *.c
 OBJ = *.o
-CC = clang
+CC = gcc
 
 main: $(OBJ)
 	$(CC) $(OBJ) -o $@

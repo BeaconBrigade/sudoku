@@ -104,7 +104,9 @@ void releasenode(Node *base)
 	}
 
 	free(base->candidate);
+	base->candidate = NULL;
 	free(base);
+	base = NULL;
 }
 
 /* Check if board is full */
