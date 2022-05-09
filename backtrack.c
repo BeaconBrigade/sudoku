@@ -13,10 +13,7 @@ Node *backtrack(Node *candidate)
 	int tochange = 0;
 	/* Base cases */
 	if (reject(candidate))
-	{
-		releasenode(candidate);
 		return NULL;
-	}
 	else if (accept(candidate))
 		return candidate;
 		
@@ -31,7 +28,6 @@ Node *backtrack(Node *candidate)
 		s = next(candidate, tochange, p);
 	}
 
-	releasenode(candidate);
 	return NULL;
 }
 
@@ -47,13 +43,13 @@ static Node *first(Node *parent, int *tochange)
 	for (i = 0; i < 10; i++)
 		child->children[i] = NULL;
 
-	/* Copy parent into child, and set first unset element to 0 */
+	/* Copy parent into child, and set first unset element to 1 */
 	for (i = 0; i < 81; i++)
 	{
 		child->candidate[i] = parent->candidate[i];
-		if ((parent->candidate[i] == 10) && newspace)
+		if ((parent->candidate[i] == 0) && newspace)
 		{
-			child->candidate[i] = 0;
+			child->candidate[i] = 1;
 			*tochange = i;
 			newspace = 0;
 		}
@@ -80,7 +76,6 @@ static Node *next(Node *parent, const int tochange, const Node *prev)
 	for (i = 0; i < 10; i++)
 		child->children[i] = NULL;
 
-
 	for (i = 0; i < 81; i++)
 		child->candidate[i] = prev->candidate[i];
 
@@ -94,6 +89,8 @@ static Node *next(Node *parent, const int tochange, const Node *prev)
 void releasenode(Node *base)
 {
 	int i;
+	if (base == NULL)
+		return;
 
 	for (i = 0; i < 10; i++)
 	{
@@ -104,16 +101,14 @@ void releasenode(Node *base)
 	}
 
 	free(base->candidate);
-	base->candidate = NULL;
 	free(base);
-	base = NULL;
 }
 
 /* Check if board is full */
 static int accept(const Node *cand)
 {
 	for (int i = 0; i < 81; i++)
-		if (cand->candidate[i] == 10)
+		if (cand->candidate[i] == 0)
 			return 0;
 	return 1;
 }
@@ -121,7 +116,7 @@ static int accept(const Node *cand)
 /* Reject bad solutions */
 static int reject(const Node *cand)
 {
-	int counter[11] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	int counter[12] = { 69, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 420 };
 	int i, j, k, offset;
 
 	/* Check each horizontal row */
@@ -130,7 +125,7 @@ static int reject(const Node *cand)
 		for (j = 0; j < 9; j++)
 			counter[cand->candidate[i * 9 + j]]++;
 
-		for (j = 0; j < 10; j++)
+		for (j = 1; j < 11; j++)
 		{
 			if (counter[j] > 1)
 				return 1;
@@ -144,7 +139,7 @@ static int reject(const Node *cand)
 		for (j = 0; j < 9; j++)
 			counter[cand->candidate[9 * j + i]]++;
 
-		for (j = 0; j < 10; j++)
+		for (j = 1; j < 11; j++)
 		{
 			if (counter[j] > 1)
 				return 1;
@@ -169,7 +164,7 @@ static int reject(const Node *cand)
 				offset += 9;
 			}
 
-			for (k = 0; k < 10; k++)
+			for (k = 1; k < 11; k++)
 			{
 				if (counter[k] > 1)
 					return 1;
