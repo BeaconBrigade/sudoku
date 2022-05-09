@@ -35,9 +35,8 @@ int main(int argc, char *argv[])
 		return 1;
 
 	/* Solve puzzle */
-	Node x;
 	Node *root, *sol;
-	root = &x;
+	root = (Node *) malloc(sizeof(Node));
 	root->candidate = puzzle;
 	root->childindex = 0;
 	for (i = 0; i < 10; i++)
