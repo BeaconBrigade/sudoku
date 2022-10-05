@@ -1,7 +1,0 @@
-make all --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/rcullen/Dev/C/sudoku'
-clang -g -Wall -c *.c
-clang -g -Wall -c *.c
-clang *.o -o main
-make: Leaving directory `/Users/rcullen/Dev/C/sudoku'
- 

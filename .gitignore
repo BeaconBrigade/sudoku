@@ -1,3 +1,6 @@
+.vscode
+.replit
+replit.nix
 
 # Ignore all of the executable and object files
 *.o

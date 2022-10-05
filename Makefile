@@ -11,5 +11,8 @@ main: $(OBJ)
 $(OBJ): $(SRC)
 	$(CC) $(CFLAGS) $(SRC)
 
+install: main
+	mv main ~/.local/bin/c-sudoku
+
 clean :
 	rm -f main $(OBJ)
