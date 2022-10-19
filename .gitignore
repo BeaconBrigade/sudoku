@@ -1,6 +1,7 @@
-.vscode
+/.vscode
 .replit
 replit.nix
+/.ccls-cache
 
 # Ignore all of the executable and object files
 *.o
